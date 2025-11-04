@@ -4,32 +4,31 @@ import java.util.PriorityQueue;
 class Student {
     private double cgpa;
     private String name;
-    private int token;
+    private int id;
 
-    public Student(double cgpa, String name, int token) {
+    public Student(double cgpa, String name, int id) {
         this.cgpa = cgpa;
         this.name = name;
-        this.token = token;
+        this.id = id;
     }
 
     public double getCgpa() { return cgpa; }
     public String getName() { return name; }
-    public int getToken() { return token; }
+    public int getId() { return id; }
 }
 
 class StudentComparator implements Comparator<Student> {
     @Override
     public int compare(Student x, Student y) {
         if (x.getCgpa() != y.getCgpa()) {
-            return Double.compare(y.getCgpa(), x.getCgpa());
+            if(x.getCgpa() > y.getCgpa()) return -1;
+            return 1;
         }
 
-        int nameCompare = x.getName().compareTo(y.getName());
-        if (nameCompare != 0) {
-            return nameCompare;
+        if(!x.getName().equals(y.getName())) {
+            return x.getName().compareTo(y.getName());
         }
-
-        return Integer.compare(x.getToken(), y.getToken());
+        return x.getId() - y.getId();
     }
 }
 
@@ -45,8 +44,8 @@ public class B4_JavaPriorityQueue {
             if (command.equals("ENTER")) {
                 String name = scanner.next();
                 double cgpa = scanner.nextDouble();
-                int token = scanner.nextInt();
-                pq.add(new Student(cgpa, name, token));
+                int id = scanner.nextInt();
+                pq.add(new Student(cgpa, name, id));
             } else if (command.equals("SERVED")) {
                 pq.poll();
             }
